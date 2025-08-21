@@ -1,0 +1,2 @@
+Automatically adds CollisionShape2D and Sprite2D nodes to CharacterBody2D, StaticBody2D, and Area2D nodes upon adding them into your scene or when making a new scene.
+This plugin checks for the name so any scenes inheriting from these nodes will not benefit from this.
