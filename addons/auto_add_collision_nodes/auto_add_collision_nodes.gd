@@ -3,18 +3,25 @@ extends EditorPlugin
 
 func _enter_tree():
 	get_tree().node_added.connect(on_node_added_to_scene_tree)
-	
+
+func has_collision_child(node: Node):
+	for child in node.get_children():
+		if child is CollisionPolygon2D:
+			return true
+		if child is CollisionShape2D:
+			return true
+	return false
 	
 func on_node_added_to_scene_tree(node: Node):
 	if node is CharacterBody2D and node.name == "CharacterBody2D":
-		add_supporting_nodes(node)
-		return
+		if !has_collision_child(node):
+			add_supporting_nodes(node)
 	if node is StaticBody2D and node.name == "StaticBody2D":
-		add_supporting_nodes(node)
-		return
+		if !has_collision_child(node):
+			add_supporting_nodes(node)
 	if node is Area2D and node.name == "Area2D":
-		add_supporting_nodes(node)
-		return
+		if !has_collision_child(node):
+			add_supporting_nodes(node)
 
 func add_supporting_nodes(node: Node):
 	var shape := CollisionShape2D.new()
